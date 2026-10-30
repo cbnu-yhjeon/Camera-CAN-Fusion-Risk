@@ -62,7 +62,10 @@ F1은 정지 객체를 잘 잡는 대신 접근·이탈 재현율이 떨어집�
 
 - 자동 기준 = 같은 규칙을 GT 3D 박스 TTC(2 Hz)에 적용한 이벤트. **850 scene에서 9개뿐**이라 수치의 불확실성이 큽니다.
 - F1은 후보를 20분의 1로 줄이지만 기준 이벤트도 일부 놓칩니다.
-- **사람이 검수한 골드셋은 아직 없습니다.** [`results/near_miss/review.html`](results/near_miss/review.html)에서 F1 후보 15개를 표시하고 `goldset.json`으로 내보낸 뒤 `python scripts/07_near_miss.py --gold goldset.json`으로 평가합니다.
+- **사람 검수 골드셋 ([`goldset.json`](results/near_miss/goldset.json))**: F1 후보 15개 중 **11개가 실제로 위험했던 장면 → 정밀도 73.3%**.
+  사람이 위험하다고 본 11개 중 7개는 자동 기준에 없었습니다(보행자 4개 포함). 자동 기준은 2 Hz GT와 '경로 안' 조건 때문에
+  위험 장면을 놓치므로, 자동 기준 정밀도(33.3%)는 과소평가입니다. 검수 대상이 F1 후보뿐이라 골드셋 기준 재현율은 잴 수 없습니다.
+  재평가: `python scripts/07_near_miss.py --gold results/near_miss/goldset.json` (검수 화면: [`review.html`](results/near_miss/review.html)).
 
 ### 위험도 — G4 (test, SAFE / CAUTION / DANGER = 15,949 / 158 / 27)
 
@@ -120,7 +123,7 @@ nuScenes 경로는 [`configs/default.yaml`](configs/default.yaml)의 `data.datar
 | 라벨: GT TTC 등급 | GT TTC + 진행 경로(\|x\| < 2 m): DANGER < 2 s, CAUTION < 4 s | 경로 밖 주차 차량까지 위험으로 세지 않도록 |
 | v2 규칙 그대로 | 특징점 점수(10%)는 0, 차선 검출 대신 \|x\| < 1.75 m | 모든 TTC 소스에 동일 적용 |
 
-**남은 일**: near-miss 골드셋 검수, 근거리에서 박스 하단이 잘린 객체의 거리 추정(현재는 추정 없음), DANGER 표본이 적은 위험도 평가의 신뢰구간.
+**남은 일**: near-miss 재현율을 잴 수 있는 넓은 골드셋(B0·B1 후보 포함 검수), 근거리에서 박스 하단이 잘린 객체의 거리 추정(현재는 추정 없음), DANGER 표본이 적은 위험도 평가의 신뢰구간.
 
 ---
 

@@ -110,5 +110,10 @@
         "hit_r": 2
       }
     }
+  },
+  "gold": {
+    "n_reviewed": 15,
+    "n_positive": 11,
+    "precision_f1": 0.7333333333333333
   }
 }
