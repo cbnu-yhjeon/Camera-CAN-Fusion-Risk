@@ -1,0 +1,31 @@
+{
+  "n_scenes": 850,
+  "n_no_can": 15,
+  "n_moving": 723,
+  "lag_median_s": 0.08000000000000096,
+  "lag_iqr_s": [
+    0.05000000000000093,
+    0.120000000000001
+  ],
+  "abs_lag_gt_0.1s": 0.4149377593360996,
+  "rmse_raw_median": 0.1427236057160104,
+  "rmse_aligned_median": 0.1392277841960556,
+  "partial_coverage_scenes": [],
+  "no_can_scenes": [
+    "scene-0161",
+    "scene-0162",
+    "scene-0163",
+    "scene-0164",
+    "scene-0165",
+    "scene-0166",
+    "scene-0167",
+    "scene-0168",
+    "scene-0170",
+    "scene-0171",
+    "scene-0172",
+    "scene-0173",
+    "scene-0174",
+    "scene-0175",
+    "scene-0176"
+  ]
+}

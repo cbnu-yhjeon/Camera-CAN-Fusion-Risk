@@ -1,0 +1,21 @@
+# Camera–CAN Fusion Risk — 의존성
+# nuscenes-devkit 이 numpy<2 를 요구하므로 전용 venv 를 쓴다:
+#   uv venv --python 3.10 .venv && uv pip install --python .venv/bin/python -r requirements.txt
+# RTX 50xx(sm_120)는 PyPI 기본 torch 휠(cu130)로 동작한다.
+numpy<2
+nuscenes-devkit
+pyquaternion
+pandas
+pyarrow
+scipy
+scikit-learn
+matplotlib
+pyyaml
+tqdm
+opencv-python-headless
+torch
+torchvision
+ultralytics          # YOLO11 (COCO 사전학습) — AGPL-3.0
+xgboost
+shap
+pytest

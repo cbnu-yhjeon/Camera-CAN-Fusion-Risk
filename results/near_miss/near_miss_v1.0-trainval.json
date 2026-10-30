@@ -1,0 +1,114 @@
+{
+  "n_reference_auto": 9,
+  "n_gt_ttc_only_episodes": 102,
+  "n_brake_trigger_episodes": 627,
+  "all": {
+    "b0": {
+      "precision": 0.024464831804281346,
+      "recall": 0.8888888888888888,
+      "cand": 327,
+      "hit_c": 8,
+      "ref": 9,
+      "hit_r": 8,
+      "ttc_only": 1556
+    },
+    "b1": {
+      "precision": 0.1,
+      "recall": 0.8888888888888888,
+      "cand": 80,
+      "hit_c": 8,
+      "ref": 9,
+      "hit_r": 8,
+      "ttc_only": 639
+    },
+    "f1": {
+      "precision": 0.3333333333333333,
+      "recall": 0.5555555555555556,
+      "cand": 15,
+      "hit_c": 5,
+      "ref": 9,
+      "hit_r": 5,
+      "ttc_only": 171
+    }
+  },
+  "by_split": {
+    "train": {
+      "b0": {
+        "precision": 0.013452914798206279,
+        "recall": 0.75,
+        "cand": 223,
+        "hit_c": 3,
+        "ref": 4,
+        "hit_r": 3
+      },
+      "b1": {
+        "precision": 0.0625,
+        "recall": 0.75,
+        "cand": 48,
+        "hit_c": 3,
+        "ref": 4,
+        "hit_r": 3
+      },
+      "f1": {
+        "precision": 0.2222222222222222,
+        "recall": 0.5,
+        "cand": 9,
+        "hit_c": 2,
+        "ref": 4,
+        "hit_r": 2
+      }
+    },
+    "test": {
+      "b0": {
+        "precision": 0.04081632653061224,
+        "recall": 1.0,
+        "cand": 49,
+        "hit_c": 2,
+        "ref": 2,
+        "hit_r": 2
+      },
+      "b1": {
+        "precision": 0.1,
+        "recall": 1.0,
+        "cand": 20,
+        "hit_c": 2,
+        "ref": 2,
+        "hit_r": 2
+      },
+      "f1": {
+        "precision": 0.3333333333333333,
+        "recall": 0.5,
+        "cand": 3,
+        "hit_c": 1,
+        "ref": 2,
+        "hit_r": 1
+      }
+    },
+    "val": {
+      "b0": {
+        "precision": 0.05454545454545454,
+        "recall": 1.0,
+        "cand": 55,
+        "hit_c": 3,
+        "ref": 3,
+        "hit_r": 3
+      },
+      "b1": {
+        "precision": 0.25,
+        "recall": 1.0,
+        "cand": 12,
+        "hit_c": 3,
+        "ref": 3,
+        "hit_r": 3
+      },
+      "f1": {
+        "precision": 0.6666666666666666,
+        "recall": 0.6666666666666666,
+        "cand": 3,
+        "hit_c": 2,
+        "ref": 3,
+        "hit_r": 2
+      }
+    }
+  }
+}

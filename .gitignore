@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+
+# 캐시 (검출·트랙·추정 parquet, YOLO 가중치) — scripts/run_all.sh 로 재생성
+cache/
+logs/
+
+
+*:Zone.Identifier
+.vscode/

@@ -1,0 +1,82 @@
+# Camera–CAN Fusion Risk — 기본 설정
+# 모든 스크립트는 --config 로 이 파일(또는 이 파일을 덮어쓰는 파일)을 읽는다.
+
+data:
+  dataroot: ~/data/nuscenes
+  version: v1.0-trainval          # 파이프라인 확인은 v1.0-mini
+  split_file: splits/scene_split_v1.json
+  camera: CAM_FRONT
+  cache_dir: cache
+
+detector:
+  weights: yolo11l.pt             # COCO 사전학습. 모든 실험이 같은 검출을 공유한다
+  imgsz: 960
+  conf: 0.25
+  batch: 32
+  # COCO class id → 이 프로젝트의 클래스
+  classes: {0: pedestrian, 1: bicycle, 2: car, 3: motorcycle, 5: bus, 7: truck}
+
+tracker:
+  iou_match: 0.3
+  max_age: 3                      # 연속 미검출 프레임 수
+  min_hits: 2
+  border_px: 4                    # 이미지 경계에 닿은 박스는 높이 측정 제외
+
+distance:
+  method: both                    # height | ground | both
+  # 클래스 평균 높이는 01_build_index.py 가 train GT 에서 계산하고 (class_heights.json),
+  # 단서별 bias·σ_rel 은 04_calibrate.py 가 train 매칭 결과에서 계산한다 (noise.json).
+  sigma_floor: 0.3                # σ_Z 하한 [m]
+  max_z: 80.0
+
+kalman:
+  sigma_a: {vehicle: 2.0, pedestrian: 1.0}     # 객체 가속도 과정잡음 [m/s²]
+  sigma_a_no_can_extra: 1.5                    # CAN 없는 F0: 자차 가속도까지 잡음으로 흡수
+  init_sigma_v: 5.0
+  gate_chi2: 9.0                               # 측정 게이팅 (1자유도 99.7%)
+
+imm:                              # F1 — 등속 + 정지 가설 (CAN v_ego)
+  p_stay: 0.97                    # 모델 유지 확률 (12 Hz 한 스텝)
+  mu_stationary0: 0.6             # 초기 정지 확률 (train 에서 본 정지 객체 비율)
+  pseudo_rel: 0.05                # 정지 가설 의사 측정 σ = rel·v_ego + floor
+  pseudo_floor: 0.3
+  sigma_a_stationary: 0.3
+
+ttc:
+  eps: 0.1                        # v_rel 하한 [m/s]
+  max: 20.0                       # 이 이상은 ∞ 로 본다
+  b1_window_s: 0.5                # B1 거리 차분 창
+  b0_min: 0.5                     # v2 하한 (그대로 재현)
+
+motion_state:
+  stationary_v: 1.0               # |v_obj| < 1 m/s → 정지
+  following_zdot: 0.5             # |Ż| < 0.5 m/s → 동행
+
+can:
+  accel_smooth_s: 0.5             # 속도 미분 가속도 평활 창
+  brake_threshold: 0              # vehicle_monitor.brake > 이 값 → 브레이크 ON
+  pose_lag_s: 0.08                # pose 계열 지연 보정 — 01b_align_check.py 측정값 (trainval 중앙값)
+
+near_miss:
+  ttc_thresh: 1.5
+  decel_thresh: -3.0
+  window_s: 1.0
+  merge_gap_s: 2.0
+  corridor_half_width: 2.0        # 진행 경로로 볼 횡방향 거리 [m]
+
+risk:
+  corridor_half_width: 2.0        # GT 라벨의 진행 경로
+  lane_half_width: 1.75           # v2 규칙의 '차선 안' 근사 (Hough 차선 검출 대신)
+  danger_ttc: 2.0
+  caution_ttc: 4.0
+  xgb:
+    n_estimators: 400
+    max_depth: 5
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+
+eval:
+  ttc_eval_max: 5.0               # GT TTC < 5 s 구간에서 MAE
+  match_iou: 0.5                  # 검출 ↔ GT 투영 박스 매칭
+  min_visibility: 2               # nuScenes visibility 토큰 ≥ 2 (40% 이상 보임)
